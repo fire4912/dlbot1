@@ -1,5 +1,5 @@
-const fs = require("fs");
 const Discord = require("discord.js");
+const fs = require("fs");
 const {
   prefix,
   token,
@@ -209,11 +209,39 @@ client.on("message", message => {
   //main source dont change --- end
 }); //client.on end here
 
+//
+//audit log
+const LOGchannel = "📜〢log";
+const Auditlog = require("discord-auditlog");
+Auditlog(client, {
+  "488640051064864768": {
+    //main server darklord official
+    auditlog: LOGchannel, // Member Nickname Change Member Update Avatar Member Update Discriminator Member Update Username
+    // Member Role Changed (require trackrole: true)
+    movement: LOGchannel, // Member Join the Server Member Leave the Server Member is Banned Member is Unbanned
+    auditmsg: LOGchannel, // Message Deleted Message Updated
+    voice: LOGchannel, // Set a Channel name if you want it
+    trackroles: true, // Default is False
+    excludedroles: ["5421651"] // Member joining a Channel Member leaving a Channel Member switching a Channel
+  }
+});
+//audit log
+//
+
+//add role to new member
+client.on("guildMemberAdd", member => {
+  console.log("User " + member.user.username + " has joined the server!");
+  //var role = member.guild.roles.cache.find(role => role.name === 'army');
+  var role = member.guild.roles.cache.get("720237874468880590"); //army
+  member.roles.add(role);
+});
+//add role to new member
+
 client.on("guildMemberAdd", member => {
   member.send(
     "📣 Hello " +
       member.user.tag +
-    "\nThank you for Always Stay with DARKLORD. We are very proud to help you and take part part to build up a community. As you can see everyone have to maintain some rules so that they could get Help from us. \n\n:regional_indicator_s: :regional_indicator_e: :regional_indicator_r: :regional_indicator_v: :regional_indicator_e: :regional_indicator_r: :small_blue_diamond: :regional_indicator_r: :regional_indicator_u: :regional_indicator_l: :regional_indicator_e: :regional_indicator_s:\n> 🔸 To Apply DARKLORD First Read <#692355415299850270> than apply in <#692355461894111333> with Your stats, IGN IGC and Experience Letter. It will take almost 3 day to join DARKLORD.\n> 🔸Must Respect others.\n> 🔸No Slag, No 18+, You are not be able to send pornography or adult pics.\n> 🔸Don't do spam in chat.\n> 🔸Don't Harass Anyone Specially any girl in the server.\n> 🔸No religion and region attack.\n> 🔸Don't share or promote your server in <#672805897634054164> \n> 🔸You can promote your server in <#718413496613732452>\n> 🔸Listen songs in the restricted Channel. Don't listen any song in General or Time Pass Voice Channel."
+      "\nThank you for Always Stay with DARKLORD. We are very proud to help you and take part part to build up a community. As you can see everyone have to maintain some rules so that they could get Help from us. \n\n:regional_indicator_s: :regional_indicator_e: :regional_indicator_r: :regional_indicator_v: :regional_indicator_e: :regional_indicator_r: :small_blue_diamond: :regional_indicator_r: :regional_indicator_u: :regional_indicator_l: :regional_indicator_e: :regional_indicator_s:\n> 🔸 To Apply DARKLORD First Read <#692355415299850270> than apply in <#692355461894111333> with Your stats, IGN IGC and Experience Letter. It will take almost 3 day to join DARKLORD.\n> 🔸Must Respect others.\n> 🔸No Slag, No 18+, You are not be able to send pornography or adult pics.\n> 🔸Don't do spam in chat.\n> 🔸Don't Harass Anyone Specially any girl in the server.\n> 🔸No religion and region attack.\n> 🔸Don't share or promote your server in <#672805897634054164> \n> 🔸You can promote your server in <#718413496613732452>\n> 🔸Listen songs in the restricted Channel. Don't listen any song in General or Time Pass Voice Channel."
   );
 });
 
