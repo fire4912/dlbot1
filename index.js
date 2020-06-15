@@ -1,6 +1,13 @@
-const fs = require("fs");
 const Discord = require("discord.js");
-const { prefix, token, botID } = require("./config.json");
+const fs = require("fs");
+const {
+  prefix,
+  token,
+  CHANNEL_ID,
+  SERVER_ID,
+  ownerID,
+  modID
+} = require("./config.json");
 const Canvas = require("canvas");
 
 const client = new Discord.Client({
@@ -50,6 +57,91 @@ client.on("message", message => {
       .catch(console.error);
   }
   //if someone mention bot --- end
+
+  //dm code
+  if (message.channel.type === "dm") {
+    var argsdm = message.content.split(" ").slice(0);
+    var argsdm = argsdm.slice(0).join(" ");
+    var BOT_ID = client.user.id;
+    var userID = message.author.id;
+    if (message.content.startsWith(prefix))
+      return message.channel.send(
+        ":x: Please use commands in real server! :x:"
+      );
+    if (message.author.bot) return;
+    message.channel
+      .send("This message has been send to the staff! :incoming_envelope:")
+      .then(msg => msg.delete({ timeout: 3000 }));
+    if (message.content.startsWith(prefix)) return;
+    if (argsdm.length > 1024)
+      return message.reply(
+        "Your message content too many characters (1024 Limit) :/"
+      );
+    var DMembed = new Discord.MessageEmbed()
+      .setColor("#0167DD")
+      .setAuthor(
+        "New Message",
+        "https://cdn.discordapp.com/attachments/502649544622735362/520740243133956138/receive.png"
+      )
+      // .setDescription("**" + argsdm + "**")
+      .addField(`Sent by: ${message.author.tag}`, "**" + argsdm + "**")
+      // .setTitle("*Message**:")
+      // .setURL(message.author.avatarURL())
+      .setFooter(
+        "This Message Was Sent By: " + message.author.username + " ",
+        message.author.displayAvatarURL()
+      )
+      .setTimestamp();
+    client.guilds.cache
+      .get(SERVER_ID)
+      .channels.cache.get(CHANNEL_ID)
+      .send(DMembed)
+      .catch(
+        console.log(
+          `Message recieved from ${userID}!(${message.author.username})`
+        )
+      );
+    client.guilds.cache
+      .get(SERVER_ID)
+      .channels.cache.get(CHANNEL_ID)
+      .send({
+        embed: {
+          description: `${prefix}reply ${message.author.id} <message>`
+        }
+      });
+  } else if (message.content.startsWith(prefix + "reply")) {
+    if (message.author.id !== ownerID && message.author.id !== modID)
+      return message.reply("You cannot use that!");
+    var argsdm = message.content.split(" ").slice(0);
+    var Rargsdm = message.content
+      .split(" ")
+      .slice(2)
+      .join(" ");
+    var userID = argsdm[1];
+    if (isNaN(argsdm[1]))
+      return message.reply(
+        "This is not an ID! Make sure to you the user's ID!"
+      );
+
+    /* var replyembed = new Discord.MessageEmbed()
+            .setColor('#00ff26')
+            .setAuthor("New Message", "https://cdn.discordapp.com/attachments/502649544622735362/520740243133956138/receive.png")
+            .setDescription(Rargsdm)
+            .setTitle("**Message**:")
+            .setFooter("This Message Was Sent By: " + message.author.username + " ", message.author.displayAvatarURL())
+        */
+
+    client.users.cache
+      .get(userID)
+      .send(Rargsdm)
+      .catch(console.log(`Message was sent to ${userID}!`));
+    if (message.author.bot) return;
+    message.channel
+      .send("Your Message was Sent!")
+      .then(msg => msg.delete({ timeout: 3000 }))
+      .catch(console.error);
+  }
+  //dm code
 
   //new
 
@@ -117,11 +209,39 @@ client.on("message", message => {
   //main source dont change --- end
 }); //client.on end here
 
+//
+//audit log
+const LOGchannel = "📜〢log";
+const Auditlog = require("discord-auditlog");
+Auditlog(client, {
+  "488640051064864768": {
+    //main server darklord official
+    auditlog: LOGchannel, // Member Nickname Change Member Update Avatar Member Update Discriminator Member Update Username
+    // Member Role Changed (require trackrole: true)
+    movement: LOGchannel, // Member Join the Server Member Leave the Server Member is Banned Member is Unbanned
+    auditmsg: LOGchannel, // Message Deleted Message Updated
+    voice: LOGchannel, // Set a Channel name if you want it
+    trackroles: true, // Default is False
+    excludedroles: ["5421651"] // Member joining a Channel Member leaving a Channel Member switching a Channel
+  }
+});
+//audit log
+//
+
+//add role to new member
+client.on("guildMemberAdd", member => {
+  console.log("User " + member.user.username + " has joined the server!");
+  //var role = member.guild.roles.cache.find(role => role.name === 'army');
+  var role = member.guild.roles.cache.get("720237874468880590"); //army
+  member.roles.add(role);
+});
+//add role to new member
+
 client.on("guildMemberAdd", member => {
   member.send(
     "📣 Hello " +
       member.user.tag +
-      "\nThank you for Always Stay with DARKLORD. We are very proud to help you and take part part to build up a community. As you can see everyone have to maintain some rules so that they could get Help from us. \n\n:regional_indicator_s: :regional_indicator_e: :regional_indicator_r: :regional_indicator_v: :regional_indicator_e: :regional_indicator_r: :small_blue_diamond: :regional_indicator_r: :regional_indicator_u: :regional_indicator_l: :regional_indicator_e: :regional_indicator_s:\n> 🔸 To Apply DARKLORD First Read <#692355415299850270> than apply in <#692355461894111333> with Your stats, IGN IGC and Experience Letter. It will take almost 3 day to join DARKLORD.\n> 🔸Must Respect others.\n> 🔸No Slag, No 18+, You are not be able to send pornography or adult pics.\n> 🔸Don't do spam in chat.\n> 🔸Don't Harass Anyone Specially any girl in the server.\n> 🔸No religion and region attack.\n> 🔸Don't share or promote your server in <#672805897634054164> \n> 🔸You can promote your server in <#691532041455534143>\n> 🔸Must check the <#690110135875403825> channel to know about any event and news.\n> 🔸Listen songs in the restricted Channel. Don't listen any song in General or Time Pass Voice Channel."
+      "\nThank you for Always Stay with DARKLORD. We are very proud to help you and take part part to build up a community. As you can see everyone have to maintain some rules so that they could get Help from us. \n\n:regional_indicator_s: :regional_indicator_e: :regional_indicator_r: :regional_indicator_v: :regional_indicator_e: :regional_indicator_r: :small_blue_diamond: :regional_indicator_r: :regional_indicator_u: :regional_indicator_l: :regional_indicator_e: :regional_indicator_s:\n> 🔸 To Apply DARKLORD First Read <#692355415299850270> than apply in <#692355461894111333> with Your stats, IGN IGC and Experience Letter. It will take almost 3 day to join DARKLORD.\n> 🔸Must Respect others.\n> 🔸No Slag, No 18+, You are not be able to send pornography or adult pics.\n> 🔸Don't do spam in chat.\n> 🔸Don't Harass Anyone Specially any girl in the server.\n> 🔸No religion and region attack.\n> 🔸Don't share or promote your server in <#672805897634054164> \n> 🔸You can promote your server in <#718413496613732452>\n> 🔸Listen songs in the restricted Channel. Don't listen any song in General or Time Pass Voice Channel."
   );
 });
 
@@ -138,7 +258,7 @@ const applyText = (canvas, text) => {
 
 client.on("guildMemberAdd", async member => {
   const channel = member.guild.channels.cache.find(
-    ch => ch.name === "🌟〢welcome-leave"
+    ch => ch.name === "☛〣🌟╎welcome-leave"
   );
   if (!channel) return;
 
@@ -200,7 +320,7 @@ client.on("guildMemberAdd", async member => {
 
 
 client.on('guildMemberAdd', member => {
-    let channel = member.guild.channels.cache.find(ch => ch.name === '🌟〢welcome-leave');
+    let channel = member.guild.channels.cache.find(ch => ch.name === '☛〣🌟╎welcome-leave');
     let memberavatar = member.user.displayAvatarURL()
         if (!channel) return;
         let welcomeembed = new Discord.MessageEmbed()
@@ -222,7 +342,7 @@ client.on('guildMemberAdd', member => {
 
 client.on("guildMemberRemove", async member => {
   const channel = member.guild.channels.cache.find(
-    ch => ch.name === "🌟〢welcome-leave"
+    ch => ch.name === "☛〣🌟╎welcome-leave"
   );
   if (!channel) return;
 

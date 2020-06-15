@@ -2,5 +2,10 @@
   "prefix": "+",
   "ownerID": "470843382793633794",
   "modID": "501058446737801233",
-  "botID": "714781945543786537"
+  "botID": "714781945543786537",
+  "botID_c":"darklord bot id",
+  "SERVER_ID": "488640051064864768",
+  "SERVER_ID_c":"official Server id for BOT DM reply",
+  "CHANNEL_ID": "719152681779986463",
+  "CHANNEL_ID_c":"official Server channel id (📬〢dm-log-✅) for BOT DM reply"
 }

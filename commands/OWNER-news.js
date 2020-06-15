@@ -27,12 +27,14 @@ module.exports = {
         // inside a command, event listener, etc.
         const HelpEmbed = new Discord.MessageEmbed()
           .setColor("RANDOM")
-          .setTitle("DarkLord New Notice. Only for demonstration purposes")
-          .setAuthor(message.author.username, message.author.displayAvatarURL())
-          .setDescription("description here")
-          .setImage(
-            "https://via.placeholder.com/500x300/7289DA/FFFFFF/?text=notice%20image%20goes%20here"
-          );
+          .setTitle("Hello Guys We have won a new Achievement ")
+        //  .setAuthor(message.author.username, message.author.displayAvatarURL())
+         // .setDescription("description here")
+        
+        .setImage(
+            "https://media.discordapp.net/attachments/713730700570001429/719575715355426826/FB_IMG_15913756537604585.jpg?width=481&height=481"
+        //  "https://via.placeholder.com/500x300/7289DA/FFFFFF/?text=notice%20image%20goes%20here"
+       );
 
         return message.channel.send(data, HelpEmbed);
       }
