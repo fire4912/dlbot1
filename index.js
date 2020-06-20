@@ -135,7 +135,10 @@ client.on("message", message => {
   //dm code
 
   //new
-
+     
+  
+  
+  
   //new
 
   //main source dont change --- start
@@ -385,5 +388,20 @@ client.on("guildMemberRemove", async member => {
     attachmentleave
   );
 });
+
+
+
+// sdasddsaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+
+
+// sdasddsaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+
+
+
+
+
+
+
+
 
 client.login(process.env.TOKEN);
