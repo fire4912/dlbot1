@@ -1,18 +1,9 @@
 const Discord = require("discord.js");
 const fs = require("fs");
-const {
-  prefix,
-  token,
-  CHANNEL_ID,
-  SERVER_ID,
-  ownerID,
-  modID
-} = require("./config.json");
+const { prefix, token, CHANNEL_ID, SERVER_ID, ownerID, modID } = require("./config.json");
 const Canvas = require("canvas");
 
-const client = new Discord.Client({
-  disableEveryone: true
-});
+const client = new Discord.Client();
 
 client.commands = new Discord.Collection();
 
@@ -144,7 +135,10 @@ client.on("message", message => {
   //dm code
 
   //new
-
+     
+  
+  
+  
   //new
 
   //main source dont change --- start
@@ -394,5 +388,20 @@ client.on("guildMemberRemove", async member => {
     attachmentleave
   );
 });
+
+
+
+// sdasddsaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+
+
+// sdasddsaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+
+
+
+
+
+
+
+
 
 client.login(process.env.TOKEN);
