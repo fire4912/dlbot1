@@ -1,4 +1,4 @@
-const { ownerID, modID } = require("../config.json");
+const customconfig = require("../config.json");
 // at the top of your file
 
 module.exports = {
@@ -6,7 +6,7 @@ module.exports = {
   description: "delete up to 99 messages.",
   cooldown: 5,
   execute(message, args) {
-    if (message.author.id !== ownerID && message.author.id !== modID) {
+    if (message.author.id !== customconfig.ownerID && message.author.id !== customconfig.modID) {
       //if(message.author.id !==ownerID) {
       message.channel.send("**Sorry!** You do not have access to that command");
     } else {

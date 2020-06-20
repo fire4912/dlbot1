@@ -6,9 +6,10 @@
   "botID_c":"darklord bot id",
   "SERVER_ID": "488640051064864768",
   "SERVER_ID_c":"official Server id for BOT DM reply",
-  "CHANNEL_ID": "719152681779986463",
-  "CHANNEL_ID_c":"official Server channel id (📬〢dm-log-✅) for BOT DM reply",
-  "SELF_ROLES_CHANNEL_ID":"713730700570001429",
-  "ROLE_ID1":"723530036581367909",
-  "ROLE_ID2":"723530197168553995"
+  "dm_CHANNEL_ID": "719152681779986463",
+  "dm_CHANNEL_ID_c":"official Server channel id (📬〢dm-log-✅) for BOT DM reply",
+  "SELF_ROLES_CHANNEL_ID":"723874721896202320",
+  "TEST_CHANNEL_ID":"713730700570001429",
+  "ROLE_ID1_minecraft":"722763972209541241",
+  "ROLE_ID2_GamingZone":"723530197168553995"
 }

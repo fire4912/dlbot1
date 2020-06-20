@@ -1,4 +1,4 @@
-const { ownerID, modID } = require("../config.json");
+const customconfig = require("../config.json");
 // at the top of your file
 
 module.exports = {
@@ -10,7 +10,7 @@ module.exports = {
   execute(message, args) {
     //470843382793633794 myid
 
-    if (message.author.id !== ownerID && message.author.id !== modID) {
+    if (message.author.id !== customconfig.ownerID && message.author.id !== customconfig.modID) {
       message.channel.send("**Sorry!** You do not have access to that command");
     } else {
       // approved user can do this bellow

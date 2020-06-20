@@ -1,9 +1,9 @@
 const Discord = require("discord.js");
 const fs = require("fs");
-const { prefix, token, CHANNEL_ID, SERVER_ID, ownerID, modID } = require("./config.json");
+const customconfig = require("./config.json");
 const Canvas = require("canvas");
 
-const client = new Discord.Client();
+const client = new Discord.Client({ partials: ["MESSAGE", "CHANNEL", "REACTION"]});
 
 client.commands = new Discord.Collection();
 
@@ -27,6 +27,70 @@ client.on("ready", () => {
   //guild setup
 });
 
+
+
+// sdddddddddddddddddddddddddd
+
+client.on("messageReactionAdd", async (reaction, user) => {
+  // If a message gains a reaction and it is uncached, fetch and cache the message.
+  // You should account for any errors while fetching, it could return API errors if the resource is missing.
+  if (reaction.message.partial) await reaction.message.fetch(); // Partial messages do not contain any content so skip them.
+  if (reaction.partial) await reaction.fetch();
+  
+  if (user.bot) return; // If the user was a bot, return.
+  if (!reaction.message.guild) return; // If the user was reacting something but not in the guild/server, ignore them.
+  if (reaction.message.guild.id !== customconfig.SERVER_ID) return; // Use this if your bot was only for one server/private server.
+  
+  if (reaction.message.channel.id === customconfig.SELF_ROLES_CHANNEL_ID) { // This is a #self-roles channel.
+    if (reaction.emoji.name === "⚒️") {
+      await reaction.message.guild.members.cache.get(user.id).roles.add(customconfig.ROLE_ID1_minecraft) // Minecraft role.
+      return user.send("Minecraft role was given!").catch(() => console.log("Failed to send DM."));
+    }
+    
+    if (reaction.emoji.name === "🎮") {
+      await reaction.message.guild.members.cache.get(user.id).roles.add(customconfig.ROLE_ID2_GamingZone); // Roblox role.
+      return user.send("Gaming Zone role was given!").catch(() => console.log("Failed to send DM."));
+    }
+  } else {
+    return; // If the channel was not a #self-roles, ignore them.
+  }
+})
+
+client.on("messageReactionRemove", async (reaction, user) => {
+  // We're gonna make a trigger, if the user remove the reaction, the bot will take the role back.
+  if (reaction.message.partial) await reaction.message.fetch();
+  if (reaction.partial) await reaction.fetch();
+  
+  if (user.bot) return;
+  if (!reaction.message.guild) return;
+  if (reaction.message.guild.id !== customconfig.SERVER_ID) return;
+  
+  if (reaction.message.channel.id === customconfig.SELF_ROLES_CHANNEL_ID) {
+    if (reaction.emoji.name === "⚒️") {
+      await reaction.message.guild.members.cache.get(user.id).roles.remove(customconfig.ROLE_ID1_minecraft) // Minecraft role removed.
+      return user.send("Minecraft role was taken!").catch(() => console.log("Failed to send DM."));
+    }
+    
+    if (reaction.emoji.name === "🎮") {
+      await reaction.message.guild.members.cache.get(user.id).roles.remove(customconfig.ROLE_ID2_GamingZone) // Roblox role removed.
+      return user.send("Gaming Zone role was taken!").catch(() => console.log("Failed to send DM."));
+    }
+  } else {
+    return;
+  }
+})
+
+
+
+
+// sdddddddddddddddddddd
+
+
+
+
+
+
+
 client.on("message", message => {
   //message.content.startsWith(client.user.username)
 
@@ -37,9 +101,9 @@ client.on("message", message => {
     message.channel
       .send(
         "My prefix here is ``" +
-          prefix +
+          customconfig.prefix +
           "``\nYou can start with ``" +
-          prefix +
+          customconfig.prefix +
           "help``"
       )
       .then(msg => {
@@ -49,13 +113,51 @@ client.on("message", message => {
   }
   //if someone mention bot --- end
 
+  
+  
+  
+  
+  
+  
+  // eeeeeeeeeeeeeeeeeeeeee
+  
+    let rolemsg = message.content.toLowerCase();
+  
+  if (rolemsg.startsWith(customconfig.prefix + "darklordrolelist")) {
+    let channel = client.channels.cache.get(customconfig.SELF_ROLES_CHANNEL_ID); // We want to sent the embed, directly to this channel.
+    const embedrole = new Discord.MessageEmbed()
+    .setColor(0xffffff)
+    .setTitle("Pick your roles!")
+    .setDescription(`⚒️ Minecraft \n\n🎮 Gaming Zone`) // We're gonna try an unicode emoji. Let's find it on emojipedia.com !
+    channel.send(embedrole).then(async rolemsg => {
+      await rolemsg.react("⚒️");
+      await rolemsg.react("🎮");
+      // We're gonna using an await, to make the react are right in order.
+    })
+  }
+  
+  // eeeeeeeeeeeeeeeeeeeeeeeee
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
   //dm code
   if (message.channel.type === "dm") {
     var argsdm = message.content.split(" ").slice(0);
     var argsdm = argsdm.slice(0).join(" ");
     var BOT_ID = client.user.id;
     var userID = message.author.id;
-    if (message.content.startsWith(prefix))
+    if (message.content.startsWith(customconfig.prefix))
       return message.channel.send(
         ":x: Please use commands in real server! :x:"
       );
@@ -63,7 +165,7 @@ client.on("message", message => {
     message.channel
       .send("This message has been send to the staff! :incoming_envelope:")
       .then(msg => msg.delete({ timeout: 3000 }));
-    if (message.content.startsWith(prefix)) return;
+    if (message.content.startsWith(customconfig.prefix)) return;
     if (argsdm.length > 1024)
       return message.reply(
         "Your message content too many characters (1024 Limit) :/"
@@ -84,8 +186,8 @@ client.on("message", message => {
       )
       .setTimestamp();
     client.guilds.cache
-      .get(SERVER_ID)
-      .channels.cache.get(CHANNEL_ID)
+      .get(customconfig.SERVER_ID)
+      .channels.cache.get(customconfig.dm_CHANNEL_ID)
       .send(DMembed)
       .catch(
         console.log(
@@ -93,15 +195,15 @@ client.on("message", message => {
         )
       );
     client.guilds.cache
-      .get(SERVER_ID)
-      .channels.cache.get(CHANNEL_ID)
+      .get(customconfig.SERVER_ID)
+      .channels.cache.get(customconfig.dm_CHANNEL_ID)
       .send({
         embed: {
-          description: `${prefix}reply ${message.author.id} <message>`
+          description: `${customconfig.prefix}reply ${message.author.id} <message>`
         }
       });
-  } else if (message.content.startsWith(prefix + "reply")) {
-    if (message.author.id !== ownerID && message.author.id !== modID)
+  } else if (message.content.startsWith(customconfig.prefix + "reply")) {
+    if (message.author.id !== customconfig.ownerID && message.author.id !== customconfig.modID)
       return message.reply("You cannot use that!");
     var argsdm = message.content.split(" ").slice(0);
     var Rargsdm = message.content
@@ -142,9 +244,9 @@ client.on("message", message => {
   //new
 
   //main source dont change --- start
-  if (!message.content.startsWith(prefix) || message.author.bot) return;
+  if (!message.content.startsWith(customconfig.prefix) || message.author.bot) return;
 
-  const args = message.content.slice(prefix.length).split(/ +/);
+  const args = message.content.slice(customconfig.prefix.length).split(/ +/);
   const commandName = args.shift().toLowerCase();
 
   const command =
@@ -163,7 +265,7 @@ client.on("message", message => {
     let reply = `You didn't provide any arguments, ${message.author}!`;
 
     if (command.usage) {
-      reply += `\nThe proper usage would be: \`${prefix}${command.name} ${command.usage}\``;
+      reply += `\nThe proper usage would be: \`${customconfig.prefix}${command.name} ${command.usage}\``;
     }
 
     return message.channel.send(reply);

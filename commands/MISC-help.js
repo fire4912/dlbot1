@@ -1,5 +1,5 @@
 const Discord = require("discord.js");
-const { prefix } = require("../config.json");
+const customconfig = require("../config.json");
 const client = new Discord.Client();
 // at the top of your file
 
@@ -51,15 +51,15 @@ module.exports = {
   */
         .setColor("#5874E8")
         .setTitle("DARKLORD Help")
-        .setDescription("My prefix for commands is ``" + prefix + "``" + "\n")
+        .setDescription("My prefix for commands is ``" + customconfig.prefix + "``" + "\n")
 
         .addField(
           "Commands",
           "\n> ``" +
-            prefix +
+            customconfig.prefix +
             "history`` - Story of Darklord" +
             "\n> ``" +
-            prefix +
+            customconfig.prefix +
             "apply`` - Information about Requirement and Apply" +
             ""
         )
@@ -67,10 +67,10 @@ module.exports = {
         .addField(
           "Everything else",
           "\n> ``" +
-            prefix +
+            customconfig.prefix +
             "dice`` - Role Mini Dice Game (1-6)" +
             "\n> ``" +
-            prefix +
+            customconfig.prefix +
             "ping`` - Check Ping" +
             ""
         )
@@ -78,16 +78,16 @@ module.exports = {
         .addField(
           "Useful links:",
           "\n> ``" +
-            prefix +
+            customconfig.prefix +
             "discord`` - Discord Server" +
             "\n> ``" +
-            prefix +
+            customconfig.prefix +
             "website`` - DarkLord Offical Website" +
             "\n> ``" +
-            prefix +
+            customconfig.prefix +
             "youtube`` - DarkLord Gaming Youtube Channel" +
             "\n> ``" +
-            prefix +
+            customconfig.prefix +
             "facebook`` - DarkLord Gaming Facebook Page" +
             ""
         )
@@ -96,7 +96,7 @@ module.exports = {
           "\u200B",
           "**Mention** DARKLORD Bot for Prefix" +
             "\n``" +
-            prefix +
+            customconfig.prefix +
             "help`` - Shows this message" +
             ""
         )
@@ -131,7 +131,7 @@ module.exports = {
     if (command.description)
       data.push(`**Description:** ${command.description}`);
     if (command.usage)
-      data.push(`**Usage:** ${prefix}${command.name} ${command.usage}`);
+      data.push(`**Usage:** ${customconfig.prefix}${command.name} ${command.usage}`);
 
     data.push(`**Cooldown:** ${command.cooldown || 3} second(s)`);
 

@@ -1,6 +1,6 @@
 const Discord = require("discord.js");
 const client = new Discord.Client();
-const { ownerID, modID, prefix } = require("../config.json");
+const customconfig = require("../config.json");
 
 module.exports = {
   name: "news",
@@ -8,7 +8,7 @@ module.exports = {
   usage: "[Bot will post news on behalf of you]",
   cooldown: 5,
   execute(message, args) {
-    if (message.author.id !== ownerID && message.author.id !== modID) {
+    if (message.author.id !== customconfig.ownerID && message.author.id !== customconfig.modID) {
       message.channel.send("**Sorry!** You do not have access to that command");
     } else {
       // approved user can do this bellow
