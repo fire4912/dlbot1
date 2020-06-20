@@ -1,5 +1,3 @@
-const { prefix } = require("../config.json");
-// at the top of your file
 module.exports = {
   name: "dice",
   description: "dice!",
