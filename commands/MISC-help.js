@@ -51,7 +51,9 @@ module.exports = {
   */
         .setColor("#5874E8")
         .setTitle("DARKLORD Help")
-        .setDescription("My prefix for commands is ``" + customconfig.prefix + "``" + "\n")
+        .setDescription(
+          "My prefix for commands is ``" + customconfig.prefix + "``" + "\n"
+        )
 
         .addField(
           "Commands",
@@ -131,7 +133,9 @@ module.exports = {
     if (command.description)
       data.push(`**Description:** ${command.description}`);
     if (command.usage)
-      data.push(`**Usage:** ${customconfig.prefix}${command.name} ${command.usage}`);
+      data.push(
+        `**Usage:** ${customconfig.prefix}${command.name} ${command.usage}`
+      );
 
     data.push(`**Cooldown:** ${command.cooldown || 3} second(s)`);
 
