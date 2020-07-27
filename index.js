@@ -194,7 +194,8 @@ client.on("message", message => {
   } else if (message.content.startsWith(customconfig.prefix + "reply")) {
     if (
       message.author.id !== customconfig.ownerID &&
-      message.author.id !== customconfig.modID
+      message.author.id !== customconfig.modID &&
+      message.author.id !== customconfig.modID2 
     )
       return message.reply("You cannot use that!");
     var argsdm = message.content.split(" ").slice(0);

@@ -7,7 +7,7 @@ module.exports = {
   usage: "[command name]",
   cooldown: 5,
   execute(message, args) {
-    if (message.author.id !== customconfig.ownerID && message.author.id !== customconfig.modID) {
+    if (message.author.id !== customconfig.ownerID && message.author.id !== customconfig.modID && message.author.id !== customconfig.modID2) {
       message.channel.send("**Sorry!** You do not have access to that command");
     } else {
       // approved user can do this bellow
