@@ -195,7 +195,8 @@ client.on("message", message => {
     if (
       message.author.id !== customconfig.ownerID &&
       message.author.id !== customconfig.modID &&
-      message.author.id !== customconfig.modID2 
+      message.author.id !== customconfig.modID2 &&
+      message.author.id !== customconfig.modID3 
     )
       return message.reply("You cannot use that!");
     var argsdm = message.content.split(" ").slice(0);
