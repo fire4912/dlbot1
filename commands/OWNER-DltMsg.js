@@ -6,7 +6,7 @@ module.exports = {
   description: "delete up to 99 messages.",
   cooldown: 5,
   execute(message, args) {
-    if (message.author.id !== customconfig.ownerID && message.author.id !== customconfig.modID) {
+    if (message.author.id !== customconfig.ownerID && message.author.id !== customconfig.modID1 && message.author.id !== customconfig.modID2 && message.author.id !== customconfig.modID3) {
       //if(message.author.id !==ownerID) {
       message.channel.send("**Sorry!** You do not have access to that command");
     } else {

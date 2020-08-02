@@ -8,7 +8,7 @@ module.exports = {
   usage: "[Bot will post news on behalf of you]",
   cooldown: 5,
   execute(message, args) {
-    if (message.author.id !== customconfig.ownerID && message.author.id !== customconfig.modID) {
+    if (message.author.id !== customconfig.ownerID && message.author.id !== customconfig.modID1 && message.author.id !== customconfig.modID2 && message.author.id !== customconfig.modID3) {
       message.channel.send("**Sorry!** You do not have access to that command");
     } else {
       // approved user can do this bellow
