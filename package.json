@@ -19,7 +19,7 @@
     "canvas": "^2.6.1"
   },
   "engines": {
-    "node": "12.x"
+    "node": "12.18.3"
   },
   "repository": {
     "url": "https://glitch.com/edit/#!/hello-express"
